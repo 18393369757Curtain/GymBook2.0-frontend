@@ -1,3 +1,4 @@
+﻿文件目录：
 -src
   -assets 静态资源
     -images 图片
