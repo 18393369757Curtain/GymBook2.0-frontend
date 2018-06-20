@@ -1,153 +1,112 @@
 <template>
-    <div id="filterM">
-        <div id="filterTop">
-            <span id="colorBlack">首页</span>
-            <span>></span>
-            <span>预定中心</span>
-            <div id="headLine"></div>
-        </div>
-        <div id="bgColorB">
-            <div id="filterCenter">
-                <span>
-                    <input type="text" placeholder="关键字">
-                </span>
-                <span>
-                    <button>搜索</button>
-                </span>
-
+    <div>
+        <div class="reserveBox">
+            <navigation></navigation>
+            <div class="breadNav">
+                <span>首页</span>
+                <span>></span>
+                <span>预定中心</span>
             </div>
-            <div id="filterBottom">
-                <div id="bottomOne">
-
-                    <dl>
-                        <dt><span>预定类型</span></dt>
-                        <dd id="bO1" @click="clickFilterB('bO','bO1')" class="myCheck">全部</dd>
-                        <dd id="bO2" @click="clickFilterB('bO','bO2')">场地</dd>
-                    </dl>
-
+            <div class="filterBox">
+                <div class="searchBox">
+                    <el-input placeholder="关键字"  size="small">
+                        <template class="seacrchBtn" slot="append">搜索</template>
+                    </el-input>
                 </div>
-                <br/>
-                <div id="bottomTwo">
-
-                    <dl>
-                        <dt><span>所属校区</span></dt>
-                        <dd id="bT1" @click="clickFilterB('bT','bT1')" class="myCheck">全部</dd>
-                        <dd id="bT2" @click="clickFilterB('bT','bT2')">南校区</dd>
-                        <dd id="bT3" @click="clickFilterB('bT','bT3')">北校区</dd>
-                        <dd id="bT4" @click="clickFilterB('bT','bT4')">东校区</dd>
-                        <dd id="bT5" @click="clickFilterB('bT','bT5')">珠海校区</dd>
-                    </dl>
+                <div class="content">
+                    <ul>
+                        <li>预定类型
+                            <span class="spanActive">全部</span>
+                            <span>场地</span>
+                        </li>
+                        <li>所属校区
+                            <span class="spanActive">全部</span>
+                            <span>南校区</span>
+                            <span>北校区</span>
+                            <span>东校区</span>
+                            <span>珠海校区</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
+            <collect></collect>
         </div>
-
-        <collect></collect>
-
     </div>
 </template>
+
+
 <script>
-    import collect from './collect.vue';
+    import navigation from '../components/navigation';
+    import collect from '../components/collect';
+    import { mapActions, mapState } from 'vuex';
+
     export default {
-        components: {
-            collect,
-        },
         data() {
-            return {
-                bO: 'bO1',
-                bT: 'bT1',
-            }
+           return {
+
+           }
+        },
+        components: {
+           navigation,
+           collect    
         },
         methods: {
-            clickFilterB :function(a, b) {
-                //改变样式
-                if (a == 'bO') {
-                    changeStyle(this.bO, b);
-                    this.bO = b;
+            ...mapActions([
+                'getGym'
+            ])
+        }
+    }
+</script>
+<style lang="scss" scoped type="text/css">
+    .reserveBox {
+        padding: 10px 15px 15px 15px;
+        .breadNav {
+            width: 100%;
+            border-bottom: 2px solid #ddd;
+            padding: 8px 0;
+            span {
+                font-size: 14px;
+                color: #555;
+            }
+        }
+        .filterBox {
+            padding: 15px 0;
+            .searchBox {
+                width: 35%;
+                .seacrchBtn {
+                    cursor: pointer;
                 }
-                else if (a == 'bT') {
-                    changeStyle(this.bT, b);
-                    this.bT = b;
+            }
+            el-input {
+               
+            }
+        }
+        .content {
+            width: 100%;
+            ul {
+                width: 100%;
+                padding: 0;
+                li {
+                    list-style-type: none;
+                    line-height: 24px;
+                    padding: 5px 0;
+                    span {
+                        display: inline-block;
+                        padding: 1px 7px;
+                        cursor: pointer;
+                        margin: 0 5px;
+                    }
+                    span:hover {
+                        background: blue;
+                        color: #fff;
+                    }
+                    .spanActive {
+                        background: blue;
+                        color: #fff;
+                    }
                 }
             }
         }
     }
-
-    function changeStyle(one,twe) {
-        document.getElementById(one).setAttribute('class','');
-        document.getElementById(twe).setAttribute('class',' myCheck ');
-    }
-</script>
-<style>
-    *{
-        margin: 0;
-        top: 0;
-        text-align: left;
-        list-style: none;
-    }
-
-    #filterM{
-        margin: 50px 100px;
-    }
-    #filterTop #colorBlack{
-        color: #000;
-        font-weight:bold;
-    }
-    #filterTop span{
-        margin: 5px;
-        color: gray;
-    }
-    #filterTop #headLine{
-        margin-top: 5px;
-        border-top: 1px solid gray;
-    }
-
-    #bgColorB{
-        margin-top:3px;
-        background-color: #eee;
-    }
-    #filterCenter{
-        padding:30px 0;
-    }
-    #filterCenter span{
-        float: left;
-    }
-    #filterCenter input{
-        margin-top:0;
-        border:1px solid #aaa;
-        width: 300px;
-        height:25px;
-        color: gray;
-    }
-    #filterCenter button{
-        height:29px;
-        border:1px solid blue;
-        color: #fff;
-        background-color: blue;
-
-    }
-    #filterBottom{
-        padding-bottom:30px;
-    }
-    #filterBottom div{
-        width: 100%;
-        padding: 10px 0;
-    }
-    #filterBottom dl{
-        padding: 0;
-    }
-    #filterBottom dd,#filterBottom dt{
-        float: left;
-        padding:0 5px;
-    }
-    #filterBottom dd{
-        /*color: blue;*/
-        cursor:pointer
-    }
-     .myCheck{
-        padding:0 10px;
-        height: 22px;
-        background: blue;
-        color: #fff;
-        text-align: center;
-    }
 </style>
+
